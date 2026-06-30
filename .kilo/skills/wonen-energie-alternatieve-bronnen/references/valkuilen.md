@@ -59,3 +59,7 @@ Liander dekt circa een derde van het land. Koppel je Liander 2025 aan alle buurt
 ## 13. `meestVoorkomendePostcode` is PC4, geen PC6
 
 Het PDOK-veld `meestVoorkomendePostcode` is een 4-cijferig getal — de meest voorkomende postcode in de buurt, niet dé postcode. De PC4-koppelroute (`scripts/pc6_naar_buurt.py --route pc4`) is daarom een grove benadering: meerdere buurten kunnen dezelfde PC4 delen. Gebruik voor publicatie de ruimtelijke route. Zie `geo-koppeling.md`.
+
+## 14. PDOK GeoJSON levert native EPSG:28992, niet WGS84
+
+PDOK's WFS levert `OUTPUTFORMAT=application/json` standaard in **EPSG:28992** (RD New, meters) — ondanks dat GeoJSON nominaal WGS84 is. De coördinaten zijn dan ~10^4-10^5, niet graden. Vraag expliciet WGS84 op met `SRSNAME=urn:ogc:def:crs:EPSG::4326`, anders faalt de ruimtelijke PC6-koppeling (`koppel_pc6_ruimtelijk`) stilletjes: de WGS84 PC6-centroïden vallen buiten de RD New-polygonen en je krijgt 0 matches. `download_bronnen.py --met-geometrie` vraagt die SRSNAME nu automatisch, en `koppel_pc6_ruimtelijk` detecteert en reprojecteert RD New als backstop. Handmatige WFS-queries met geometrie moeten zelf `&SRSNAME=urn:ogc:def:crs:EPSG::4326` meegeven.

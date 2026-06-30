@@ -84,7 +84,7 @@ maak_top15(b, "gemiddeldAardgasverbruik", "buurtnaam",
 | `references/bronnen.md` | Alle bronnen met URL, formaat, toegang en licentie — live geverifieerd |
 | `references/kolomnamen.md` | Exacte kolomnamen per bron en de jaarmatrix (welke kolom in welk jaar gevuld is) |
 | `references/recepten.md` | Vijf kant-en-klare koppelrecepten; recept 1 en 4 zijn end-to-end op echte data gedraaid |
-| `references/valkuilen.md` | De tien meestgemaakte fouten bij deze bronnen |
+| `references/valkuilen.md` | De veertien meestgemaakte fouten bij deze bronnen |
 | `references/geo-koppeling.md` | De drie routes van PC6 naar buurt |
 
 ## Scripts

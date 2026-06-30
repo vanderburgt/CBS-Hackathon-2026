@@ -39,7 +39,7 @@ references/
   bronnen.md                 Alle bronnen met URL, formaat, toegang, licentie
   kolomnamen.md              Exacte kolomnamen + jaarmatrix (welke kolom in welk jaar gevuld is)
   recepten.md                Vijf koppelrecepten; recept 1 en 4 zijn op echte data gedraaid
-  valkuilen.md               De dertien meestgemaakte fouten
+  valkuilen.md               De veertien meestgemaakte fouten
   geo-koppeling.md           Drie routes van PC6 naar buurt
 scripts/
   download_bronnen.py        Download netbeheer + PDOK-buurtkaart naar data/ (alleen stdlib)

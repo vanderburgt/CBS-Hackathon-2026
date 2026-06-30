@@ -64,7 +64,7 @@ def maak_top15(
 ) -> pd.DataFrame:
     """Bereken de top-n en teken het staafdiagram in de huisstijl van de skill.
 
-    Volgt het output-contract: horizontale balken (hoogste bovenaan), een rode
+    Volgt het output-contract: horizontale balken (hoogste bovenaan), een neutrale
     gestreepte referentielijn voor het landelijk gemiddelde, waardelabels aan de
     balken, een grijze ondertitel (bijv. bron + peildatum) en een bronvermelding
     linksonder. Getallen in Nederlandse notatie (punt als duizendtalscheiding).
