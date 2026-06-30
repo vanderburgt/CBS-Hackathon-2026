@@ -1,0 +1,11 @@
+# Kern — nodig voor download_bronnen.py, pc6_naar_buurt.py (PC4 + crosswalk) en maak_top15.py
+pandas>=2.0
+matplotlib>=3.7
+requests>=2.28
+
+# Optioneel — alleen voor de ruimtelijke PC6->buurt route (pc6_naar_buurt.py --route ruimtelijk)
+# geopandas>=0.14
+# shapely>=2.0
+
+# download_bronnen.py gebruikt alleen de standaardbibliotheek (urllib) en heeft niets van
+# bovenstaande nodig; het draait dus ook in een kale Python-omgeving.
