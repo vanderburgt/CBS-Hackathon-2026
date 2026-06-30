@@ -134,7 +134,14 @@ def download_pdok(jaar: str, niveau: str, out: Path, met_geometrie: bool) -> boo
                 log(f"PDOK {niveau} {jaar}: niet in deze jaargang, overgeslagen: {', '.join(weg)}")
             props = ",".join(geldig)
 
+    # PDOK's WFS levert GeoJSON *native* in EPSG:28992 (RD New, meters) als je geen
+    # SRSNAME opgeeft — ondanks dat GeoJSON nominaal WGS84 is. Vraag expliciet WGS84
+    # op voor de geometrie-variant, zodat koppel_pc6_ruimtelijk (point-in-polygon met
+    # WGS84 PC6-centroïden) klopt. Zie references/valkuilen.md.
+    srs = "urn:ogc:def:crs:EPSG::4326" if met_geometrie else None
+
     features: list[dict] = []
+    crs_member: dict | None = None
     start = 0
     while True:
         params = {
@@ -148,6 +155,8 @@ def download_pdok(jaar: str, niveau: str, out: Path, met_geometrie: bool) -> boo
         }
         if props:
             params["PROPERTYNAME"] = props
+        if srs:
+            params["SRSNAME"] = srs
         url = f"{base}?{urlencode(params)}"
         try:
             raw = _request(url)
@@ -158,7 +167,10 @@ def download_pdok(jaar: str, niveau: str, out: Path, met_geometrie: bool) -> boo
             # WFS-foutmelding komt als XML terug.
             log(f"PDOK {niveau} {jaar}: WFS-fout: {raw[:300].decode('utf-8', 'replace')}")
             return False
-        batch = json.loads(raw).get("features", [])
+        doc = json.loads(raw)
+        if crs_member is None:
+            crs_member = doc.get("crs")
+        batch = doc.get("features", [])
         if not met_geometrie:
             # PROPERTYNAME beperkt de attributen, maar de WFS levert de geometrie tóch.
             # Strip die om de bestandsomvang klein te houden.
@@ -174,8 +186,13 @@ def download_pdok(jaar: str, niveau: str, out: Path, met_geometrie: bool) -> boo
 
     suffix = "_geo" if met_geometrie else ""
     doel = out / f"pdok_{niveau}_{jaar}{suffix}.geojson"
-    doel.write_text(json.dumps({"type": "FeatureCollection", "features": features}),
-                    encoding="utf-8")
+    fc = {"type": "FeatureCollection", "features": features}
+    if met_geometrie and crs_member:
+        # Behoud de CRS-declaratie die PDOK meelevert, zodat geopandas de juiste
+        # projectie kent (WGS84 bij --met-geometrie). Zonder geometrie is een
+        # crs-lid zinloos en wordt weggelaten.
+        fc["crs"] = crs_member
+    doel.write_text(json.dumps(fc), encoding="utf-8")
     log(f"PDOK {niveau} {jaar}: opgeslagen als {doel.name} ({len(features)} features, "
         f"{'incl.' if met_geometrie else 'zonder'} geometrie).")
     return True

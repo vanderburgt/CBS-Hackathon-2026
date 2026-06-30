@@ -159,9 +159,25 @@ def koppel_pc6_ruimtelijk(
         ) from e
 
     buurten = gpd.read_file(buurten_geojson)
-    if buurten.crs is None:
-        buurten = buurten.set_crs(epsg=4326)
-    buurten = buurten.to_crs(epsg=4326)
+    # GeoJSON wordt door geopandas default als EPSG:4326 (WGS84) gelabeld, ook als er
+    # geen crs-lid in staat. PDOK levert echter native EPSG:28992 (RD New, meters)
+    # tenzij je SRSNAME=EPSG:4326 vraagt — en download_bronnen.py deed dat voorheen
+    # niet. Vertrouw dus niet op het gelabelde CRS, maar op de coördinaatgrootte:
+    # RD-New-coördinaten zijn ~10^4-10^5, WGS84 graden < 180. Corrigeer een verkeerd
+    # label zodat de point-in-polygon-join met WGS84 PC6-centroïden klopt.
+    sample_x = abs(buurten.geometry.iloc[0].representative_point().x) if len(buurten) else 0.0
+    is_rd = sample_x > 1000
+    if is_rd:
+        # Het gelabelde CRS (4326) klopt niet voor deze coördinaten — stel RD New in
+        # en reprojecteer daarna naar WGS84.
+        buurten = buurten.set_crs(epsg=28992, allow_override=True).to_crs(epsg=4326)
+        print("Let op: buurten-GeoJSON zat in EPSG:28992 (RD New); gereprojecteerd naar "
+              "WGS84. Download opnieuw met `download_bronnen.py --met-geometrie` voor "
+              "bestanden die direct WGS84 zijn.")
+    else:
+        if buurten.crs is None:
+            buurten = buurten.set_crs(epsg=4326)
+        buurten = buurten.to_crs(epsg=4326)
     if "water" in buurten.columns:
         buurten = buurten[buurten["water"] == "NEE"].copy()
 

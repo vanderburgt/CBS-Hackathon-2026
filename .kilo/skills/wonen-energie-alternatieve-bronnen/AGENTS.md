@@ -8,7 +8,7 @@ AI-agent-skill voor journalistiek onderzoek naar wonen en energie met open overh
 - `references/bronnen.md` — Bronnen met URL, formaat, toegang, licentie
 - `references/kolomnamen.md` — Exacte kolomnamen + jaarmatrix per bron
 - `references/recepten.md` — Vijf koppelrecepten (recept 1 en 4 op echte data getest)
-- `references/valkuilen.md` — Dertien veelgemaakte fouten
+- `references/valkuilen.md` — Veertien veelgemaakte fouten
 - `references/geo-koppeling.md` — Drie routes PC6 → buurt
 - `scripts/` — `download_bronnen.py`, `pc6_naar_buurt.py`, `maak_top15.py`
 

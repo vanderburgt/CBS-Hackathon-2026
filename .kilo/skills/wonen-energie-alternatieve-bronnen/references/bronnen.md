@@ -25,7 +25,7 @@ Alle URL's live geverifieerd op 2026-06-30 (HTTP 200, tenzij anders vermeld). Co
 - `PROPERTYNAME` beperkt de *attributen*, maar de WFS levert de **geometrie tóch** mee. Strip die na het downloaden als je alleen attributen nodig hebt (doet `download_bronnen.py` automatisch).
 - De WFS weigert het hele verzoek (HTTP 400) als ook maar één `PROPERTYNAME` niet bestaat in die jaargang. Kolommen verschillen per jaar — `download_bronnen.py` filtert de gevraagde lijst eerst tegen `DescribeFeatureType`.
 
-**Coördinatenstelsel**: GeoJSON-output is WGS84 (EPSG:4326); bronprojectie is EPSG:28992 (RD New).
+**Coördinatenstelsel**: PDOK levert de WFS native in EPSG:28992 (RD New). GeoJSON-output is pas WGS84 (EPSG:4326) als je `&SRSNAME=urn:ogc:def:crs:EPSG::4326` meegeeft — `download_bronnen.py --met-geometrie` doet dat. Zie ook `valkuilen.md` punt 14.
 
 **Updatefrequentie**: jaarlijks (nieuw jaarnummer in de URL).
 
@@ -104,7 +104,7 @@ Alle URL's live geverifieerd op 2026-06-30 (HTTP 200, tenzij anders vermeld). Co
 
 **Geografisch niveau**: nationaal en provinciaal via open kanalen. Niet op buurtniveau zonder StatLine.
 
-**Toegang**: Vastgoeddashboard op `https://www.kadaster.nl/zakelijk/producten/woningmarkt/vastgoeddashboard`.
+**Toegang**: Vastgoeddashboard op `https://www.kadaster.nl/zakelijk/vastgoedinformatie/vastgoedcijfers/vastgoeddashboard` (geverifieerd 2026-06-30); kwartaalberichten woningmarkt op `https://www.kadaster.nl/zakelijk/vastgoedinformatie/kwartaalberichten/kwartaalberichten-woningmarkt`.
 
 **Voor woningwaarde per buurt**: gebruik `gemiddeldeWoningwaarde` uit de PDOK-buurtkaart (gemiddelde WOZ per woning, × €1.000).
 
