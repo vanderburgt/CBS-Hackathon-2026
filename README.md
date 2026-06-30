@@ -4,13 +4,27 @@ AI-agent-skill voor journalistiek onderzoek naar wonen en energie met **open ove
 
 De skill koppelt netbeheerdata (verbruik per postcode), de PDOK CBS-buurtkaart, energielabels en koopprijzen tot een scherpe bevinding per buurt, wijk of gemeente — en is eerlijk over de onzekerheid.
 
-## Werkt in elke agent
+## Installatie
 
-De skill is bronagnostisch. De `SKILL.md` heeft standaard frontmatter (`name` + `description`) en de scripts zijn gewone Python-CLI's.
+Deze repo is opgezet als **standalone skill**: de repository-root ís de skill-map (de mapnaam `wonen-energie-alternatieve-bronnen` komt overeen met het `name`-veld in `SKILL.md`, zoals de [Agent Skills-specificatie](https://agentskills.io/specification) vereist). Daardoor is installeren een drop-in: clone de repo rechtstreeks in je skills-map.
 
-- **kilo (VS Code)** — staat al onder `.kilo/skills/`; kilo laadt hem automatisch (zie `kilo.json` → `skills.paths`). Roep aan met de skillnaam.
-- **Claude Code** — kopieer of symlink de map naar `~/.claude/skills/` of `<project>/.claude/skills/`. De `SKILL.md`-frontmatter is identiek aan wat Claude Code verwacht.
-- **Kale terminal / andere agent** — draai de scripts direct; ze hebben de agent niet nodig.
+### Kilo (VS Code / CLI)
+
+```bash
+# Project-skill (alleen dit project):
+git clone https://github.com/linksmith/wonen-energie-alternatieve-bronnen .kilo/skills/wonen-energie-alternatieve-bronnen
+
+# Globale skill (alle projecten):
+git clone https://github.com/linksmith/wonen-energie-alternatieve-bronnen ~/.kilo/skills/wonen-energie-alternatieve-bronnen
+```
+
+Start daarna een nieuwe sessie — Kilo scant skills bij opstarten. Roep aan met de skillnaam.
+
+### Andere agents / kale terminal
+
+- **Claude Code** — clone naar `~/.claude/skills/wonen-energie-alternatieve-bronnen` of `<project>/.claude/skills/`. De `SKILL.md`-frontmatter is identiek aan wat Claude Code verwacht.
+- **Open-agentstandaard (`.agents/skills/`)** — clone naar `~/.agents/skills/wonen-energie-alternatieve-bronnen`.
+- **Kale terminal** — draai de scripts direct; ze hebben de agent niet nodig.
 
 ## Snel starten
 

@@ -1,6 +1,11 @@
 ---
 name: wonen-energie-alternatieve-bronnen
 description: Gebruik deze skill voor journalistiek onderzoek naar wonen en energie met open overheidsdata buiten CBS StatLine om. Inzetbaar als StatLine niet bereikbaar is of als aanvulling daarop. Dekt energieverbruik (gas en elektriciteit), zonnepanelen, aardgasvrije woningen, energielabels, woningwaarde en koopprijzen per buurt, wijk, gemeente en postcode, met geografische koppeling tussen bronnen via buurtcode en PC6.
+license: MIT
+metadata:
+  author: linksmith
+  version: 1.0.0
+  source: https://github.com/linksmith/wonen-energie-alternatieve-bronnen
 ---
 
 ## Doel
